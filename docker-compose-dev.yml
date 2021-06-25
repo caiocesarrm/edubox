@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  eduboxbackend:
+    container_name: eduboxbackend
+    build: ./backend/
+    command: python3 manage.py runserver 0.0.0.0:5001
+    expose:
+      - 5001
+    ports:
+      - 5001:5001
+    restart: always
+    env_file:
+      - ./backend/.envs/.env-dev
+    volumes:
+      - ./backend/:/app
+
+  eduboxfrontend:
+      container_name: eduboxfrontend
+      build: ./frontend
+      command: npm run serve
+      expose: 
+      - 8081
+      ports: 
+        - 8081:8081
+      environment: 
+        PORT: 8081
+      restart: always
+      volumes: 
+        - ./frontend/:/app
+        - /app/node_modules
+    
+  
+
+    
